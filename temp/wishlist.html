@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<!--Body Content-->
+<div id="page-content" style="margin-top:70px">
+    <!--Page Title-->
+    <div class="page section-header text-center">
+        <div class="page-title">
+            <div class="wrapper"><h1 class="page-width">Wish List</h1></div>
+        </div>
+    </div>
+    <!--End Page Title-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 main-col">
+                <form action="#">
+                    <div class="wishlist-table table-content table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="product-name text-center alt-font">Remove</th>
+                                <th class="product-price text-center alt-font">Images</th>
+                                <th class="product-name alt-font">Product</th>
+                                <th class="product-price text-center alt-font" hidden>Unit Price</th>
+                                <th class="stock-status text-center alt-font" hidden>Stock Status</th>
+                                <th class="product-subtotal text-center alt-font">Get a Quate</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in wishlist %}
+                            <tr>
+                                <td class="product-remove text-center" valign="middle"><a
+                                        href="/delwishlist/{{i.product.id}}"><i
+                                        class="icon icon anm anm-times-l"></i></a></td>
+                                <td class="product-thumbnail text-center">
+                                    <a href="#"><img src="{{i.product.img.url}}" alt=""
+                                                     title=""/></a>
+                                </td>
+                                <td class="product-name"><h4 class="no-margin"><a href="/product_detail/{{i.product.id}}">{{i.product.title}}</a></h4>
+                                </td>
+                                <td class="product-price text-center" hidden><span class="amount">$165.00</span></td>
+                                <td class="stock text-center" hidden>
+                                    <span class="in-stock">in stock</span>
+                                </td>
+                                <td class="product-subtotal text-center">
+                                    {% if user.is_authenticated %}
+                                    {% if not user.is_staff %}
+                                    <a href="/chat/chatre/{{user.id}}/?p_id={{i.product.id}}" class="btn btn-small"
+                                       type="button">Get a Quote</a>
+                                    {% else %}
+                                    <a hidden href="/chat/chatrea/{{user.id}}" class="btn btn-small" type="button">Get a
+                                        Quote</a>
+                                    {% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td>
+                                    Product not found
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--End Body Content-->
+
+{% endblock content %}

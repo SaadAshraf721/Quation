@@ -1,0 +1,434 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<!--Body Content-->
+<div id="page-content" style="margin-top:70px">
+    <!--Collection Banner-->
+    <div class="collection-header">
+        <div class="collection-hero">
+            <div class="collection-hero__image"><img class="blur-up lazyload"
+                                                     data-src="{% static 'assets/images/cat-women.jpg' %}"
+                                                     src="{% static 'assets/images/cat-women.jpg' %}" alt="Women"
+                                                     title="Women"/></div>
+            <div class="collection-hero__title-wrapper"><h1 class="collection-hero__title page-width">Shop Left
+                Sidebar</h1></div>
+        </div>
+    </div>
+    <!--End Collection Banner-->
+
+    <div class="container" style="margin-top:70px">
+        <div class="row">
+            <!--Sidebar-->
+            <div class="col-12 col-sm-12 col-md-3 col-lg-3 sidebar filterbar" hidden>
+                <div class="closeFilter d-block d-md-none d-lg-none"><i class="icon icon anm anm-times-l"></i></div>
+                <div class="sidebar_tags">
+                    <form action="/products/15" method="POST">
+                        {% csrf_token %}
+                        <!--Categories-->
+                        <div class="sidebar_widget categories filter-widget">
+                            <div class="widget-title"><h2>Categories</h2></div>
+                            <div class="widget-content">
+                                <ul class="sidebar_categories">
+                                    <div class="filters-toolbar__item">
+                                        <select name="category" id="SortBys"
+                                                class="filters-toolbar__input filters-toolbar__input--sort">
+                                            <!--                                                    <option value="title-ascending" selected="selected">-&#45;&#45;select-&#45;&#45;</option>-->
+                                            {% for i in caty %}
+                                            <option value="{{i.id}}">{{i.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--Categories-->
+                        <!--Price Filter-->
+                        <div class="sidebar_widget filterBox filter-widget">
+                            <div class="widget-title">
+                                <h2>Price</h2>
+                            </div>
+                            <div id="slider-range"
+                                 class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all">
+                                <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="no-margin"><input id="amount" type="text" name="price"></p>
+                                </div>
+                                <div class="col-6 text-right margin-25px-top">
+                                    <button type="submit" class="btn btn-secondary btn--small">filter</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Price Filter-->
+                    </form>
+                    <!--Brand-->
+                    <div class="sidebar_widget filterBox filter-widget" hidden>
+                        <div class="widget-title"><h2>Brands</h2></div>
+                        <ul>
+                            <li>
+                                <input type="checkbox" value="allen-vela" id="check1">
+                                <label for="check1"><span><span></span></span>Allen Vela</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="oxymat" id="check3">
+                                <label for="check3"><span><span></span></span>Oxymat</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="vanelas" id="check4">
+                                <label for="check4"><span><span></span></span>Vanelas</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="pagini" id="check5">
+                                <label for="check5"><span><span></span></span>Pagini</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" value="monark" id="check6">
+                                <label for="check6"><span><span></span></span>Monark</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--End Brand-->
+
+                    <!--Brand-->
+                    <div class="sidebar_widget filterBox filter-widget" hidden>
+                        <div class="widget-title"><h2>Brands</h2></div>
+                        <ul>
+                            <li>
+                                <input type="checkbox" value="allen-vela" id="check1">
+                                <label for="check1"><span><span></span></span>Allen Vela</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--End Brand-->
+                    <!--Popular Products-->
+                    <div class="sidebar_widget">
+                        <div class="widget-title"><h2>Popular Products</h2></div>
+                        <div class="widget-content">
+                            <div class="list list-sidebar-products">
+                                <div class="grid">
+                                    <div class="grid__item">
+                                        <div class="mini-list-item">
+                                            <div class="mini-view_image">
+                                                <a class="grid-view-item__link" href="#">
+                                                    <img class="grid-view-item__image"
+                                                         src="{% static 'assets/images/product-images/mini-product-img.jpg' %}"
+                                                         alt=""/>
+                                                </a>
+                                            </div>
+                                            <div class="details"><a class="grid-view-item__title" href="#">Cena
+                                                Skirt</a>
+                                                <div class="grid-view-item__meta"><span
+                                                        class="product-price__price"><span class="money">$173.60</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Popular Products-->
+                    <!--Banner-->
+                    <div class="sidebar_widget static-banner" hidden>
+                        <img src="{% static 'assets/images/side-banner-2.jpg' %}" alt=""/>
+                    </div>
+                    <!--Banner-->
+                    <!--Information-->
+                    <div class="sidebar_widget" hidden>
+                        <div class="widget-title"><h2>Information</h2></div>
+                        <div class="widget-content"><p>Use this text to share information about your brand with your
+                            customers. Describe a product, share announcements, or welcome customers to your store.</p>
+                        </div>
+                    </div>
+                    <!--end Information-->
+                </div>
+            </div>
+            <!--End Sidebar-->
+            <!--Main Content-->
+            <div class="col-12 col-sm-12 col-md-9 col-lg-9 main-col">
+                <div class="category-description" hidden>
+                    <h3>Category Description</h3>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
+                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                        of type and scrambled it to make a type specimen book. It has survived not only five centuries,
+                        but also the leap into electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets containing.</p>
+                    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of
+                        classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a
+                        Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin
+                        words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in
+                        classical literature, discovered the undoubtable source.</p>
+                </div>
+                <hr>
+                <div class="productList product-load-more">
+                    <!--Toolbar-->
+                    <button type="button" class="btn btn-filter d-block d-md-none d-lg-none"> Product Filters</button>
+                    <div class="toolbar">
+                        <div class="filters-toolbar-wrapper">
+                            <div class="row">
+                                <div class="col-4 col-md-4 col-lg-4 filters-toolbar__item collection-view-as d-flex justify-content-start align-items-center">
+                                    <a href="shop-left-sidebar.html" title="Grid View"
+                                       class="change-view change-view--active">
+                                        <img src="{% static 'assets/images/grid.jpg' %}" alt="Grid" hidden/>
+                                    </a>
+                                    <a href="shop-listview.html" title="List View" class="change-view">
+                                        <img src="{% static 'assets/images/list.jpg' %}" alt="List" hidden/>
+                                    </a>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-4 text-center filters-toolbar__item filters-toolbar__item--count d-flex justify-content-center align-items-center">
+                                    <span class="filters-toolbar__product-count">Product's</span>
+                                </div>
+                                <div class="col-4 col-md-4 col-lg-4 text-right" hidden>
+                                    <div class="filters-toolbar__item">
+                                        <label for="SortBy" class="hidden">Sort</label>
+                                        <select name="SortBy" id="SortBy"
+                                                class="filters-toolbar__input filters-toolbar__input--sort">
+                                            <option value="title-ascending" selected="selected">Sort</option>
+                                            <option>Best Selling</option>
+                                            <option>Alphabetically, A-Z</option>
+                                            <option>Alphabetically, Z-A</option>
+                                            <option>Price, low to high</option>
+                                            <option>Price, high to low</option>
+                                            <option>Date, new to old</option>
+                                            <option>Date, old to new</option>
+                                        </select>
+                                        <input class="collection-header__default-sort" type="hidden" value="manual">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Toolbar-->
+                    {% if product %}
+                    <div class="grid-products grid--view-items">
+                        <div class="row">
+                            {% for i in product %}
+                            <div class="col-6 col-sm-6 col-md-4 col-lg-3 item">
+                                <!-- start product image -->
+                                <div class="product-image">
+                                    <!-- start product image -->
+                                    <a href="/product_detail/{{i.id}}">
+                                        <!-- image -->
+                                        <img style="height: 170px;" class="primary blur-up lazyload"
+                                             data-src="{{i.img.url}}" src="{{i.img.url}}" alt="image" title="product">
+                                        <!-- End image -->
+                                        <!-- Hover image -->
+                                        <img style="height:170px;" class="hover blur-up lazyload"
+                                             data-src="{{i.img.url}}" src="{{i.img.url}}" alt="image" title="product">
+                                        <!-- End hover image -->
+                                    </a>
+                                    <!-- end product image -->
+                                    <!-- countdown start -->
+                                    <div class="saleTime desktop" data-countdown="2022/03/01" hidden></div>
+                                    <!-- countdown end -->
+                                    <!-- Start product button -->
+                                    <div class="button-set">
+                                        <div class="wishlist-btn">
+                                            <a class="wishlist add-to-wishlist" href="/addwishlist/{{i.id}}"
+                                               title="Add to Wishlist">
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end product button -->
+                                </div>
+                                <!-- end product image -->
+                                {% if user.is_authenticated %}
+                                {% if not user.is_staff %}
+                                <a href="/chat/chatre/{{user.id}}/?p_id={{i.id}}">
+                                    <span style="font-size: 1.5em; color: Tomato;">
+                                          <i class="fa fa-opencart"></i>
+                                    </span>Get a Quote</a>
+                                </a>
+                                {% else %}
+                                <a href="/chat/chatrea/{{user.id}}" class="btn btn-addto-cart" type="button" hidden>Get
+                                    a Quote</a>
+                                {% endif %}
+                                {% else %}
+                                <a href="/login/" type="button">
+                                    <span style="font-size: 1.5em; color: Tomato;">
+                                          <i class="fa fa-opencart"></i>
+                                    </span>Get a Quote</a>
+                                {% endif %}
+                                <!--start product details -->
+                                <div class="product-details text-center">
+                                    <!-- product name -->
+                                    <div class="product-name">
+                                        <a class="over" href="/product_detail/{{i.id}}">{{i.title}}</a>
+                                    </div>
+                                    <!-- End product name -->
+                                    <!-- product price -->
+                                    <div class="product-price" hidden>
+                                        <span class="old-price">$500.00</span>
+                                        <span class="price">$600.00</span>
+                                    </div>
+                                    <!-- End product price -->
+
+                                    <div class="product-review" hidden>
+                                        <i class="font-13 fa fa-star"></i>
+                                        <i class="font-13 fa fa-star"></i>
+                                        <i class="font-13 fa fa-star"></i>
+                                        <i class="font-13 fa fa-star"></i>
+                                        <i class="font-13 fa fa-star-o"></i>
+                                    </div>
+                                    <!-- Variant -->
+                                    <ul class="swatches" hidden>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant1.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant2.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant3.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant4.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant5.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant6.jpg" alt="image"/></li>
+                                    </ul>
+                                    <!-- End Variant -->
+                                </div>
+                                <!-- End product details -->
+                                <!-- countdown start -->
+                                <div class="timermobile" hidden>
+                                    <div class="saleTime desktop" data-countdown="2022/03/01"></div>
+                                </div>
+                                <!-- countdown end -->
+                            </div>
+                            {% empty %}
+                            <p>Not found Any Product.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if products %}
+                    <div class="grid-products grid--view-items">
+                        <div class="row">
+                            {% for i in products %}
+                            <div class="col-6 col-sm-6 col-md-4 col-lg-3 item">
+                                <!-- start product image -->
+                                <div class="product-image">
+                                    <!-- start product image -->
+                                    <a href="#">
+                                        <!-- image -->
+                                        <img class="primary blur-up lazyload" data-src="{{i.img.url}}"
+                                             src="{{i.img.url}}" alt="image" title="product">
+                                        <!-- End image -->
+                                        <!-- Hover image -->
+                                        <img class="hover blur-up lazyload" data-src="{{i.img.url}}" src="{{i.img.url}}"
+                                             alt="image" title="product">
+                                        <!-- End hover image -->
+                                        <!-- product label -->
+                                        <div class="product-labels rectangular" hidden><span
+                                                class="lbl on-sale">-16%</span> <span class="lbl pr-label1">new</span>
+                                        </div>
+                                        <!-- End product label -->
+                                    </a>
+                                    <!-- end product image -->
+
+                                    <!-- countdown start -->
+                                    <div class="saleTime desktop" data-countdown="2022/03/01" hidden></div>
+                                    <!-- countdown end -->
+
+                                    <!-- Start product button -->
+                                    <form class="variants add" action="/chat/" method="post">
+                                        <a href="/chat/" class="btn btn-addto-cart" type="button">Get a Quote</a>
+                                    </form>
+                                    <div class="button-set">
+                                        <a href="javascript:void(0)" title="Quick View"
+                                           class="quick-view-popup quick-view" data-toggle="modal"
+                                           data-target="#content_quickview">
+                                            <i class="icon anm anm-search-plus-r" hidden></i>
+                                        </a>
+                                        <div class="wishlist-btn">
+                                            <a class="wishlist add-to-wishlist" href="/addwishlist/{{i.id}}"
+                                               title="Add to Wishlist">
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- end product button -->
+                                </div>
+                                <!-- end product image -->
+                                <style>
+                                    a.title {
+                                        display: -webkit-box;
+                                        -webkit-line-clamp: 1;
+                                        -webkit-box-orient: vertical;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                    }
+                                </style>
+                                <!--start product details -->
+                                <div class="product-details text-center">
+                                    <!-- product name -->
+                                    <div class="product-name">
+                                        <a class="title" href="/product_detail/{{i.id}}">{{i.title}}</a>
+                                    </div>
+                                    <!-- End product name -->
+                                    <!-- product price -->
+                                    <div class="product-price" hidden>
+                                        <span class="old-price">$500.00</span>
+                                        <span class="price">$600.00</span>
+                                    </div>
+                                    <!-- End product price -->
+
+                                    <div class="product-review" hidden>
+                                        <i class="font-13 fa fa-star"></i>
+                                        <i class="font-13 fa fa-star"></i>
+                                        <i class="font-13 fa fa-star"></i>
+                                        <i class="font-13 fa fa-star"></i>
+                                        <i class="font-13 fa fa-star-o"></i>
+                                    </div>
+                                    <!-- Variant -->
+                                    <ul class="swatches" hidden>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant1.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant2.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant3.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant4.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant5.jpg" alt="image"/></li>
+                                        <li class="swatch medium rounded"><img
+                                                src="assets/images/product-images/variant6.jpg" alt="image"/></li>
+                                    </ul>
+                                    <!-- End Variant -->
+                                </div>
+                                <!-- End product details -->
+                                <!-- countdown start -->
+                                <div class="timermobile" hidden>
+                                    <div class="saleTime desktop" data-countdown="2022/03/01"></div>
+                                </div>
+                                <!-- countdown end -->
+                            </div>
+                            {% empty %}
+                            <p>Not found Any Product.</p>
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+
+                    {% endif %}
+                </div>
+                <div class="infinitpaginOuter" hidden>
+                    <div class="infinitpagin">
+                        <a href="#" class="btn loadMore">Load More</a>
+                    </div>
+                </div>
+            </div>
+            <!--End Main Content-->
+        </div>
+    </div>
+
+</div>
+<!--End Body Content-->
+{% endblock content %}

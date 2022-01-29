@@ -1,0 +1,279 @@
+{% extends 'base_chat.html' %}
+
+{% block content %}
+
+{% load static%}
+<script>
+function snd(){
+console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+ messages=$('#msg').val();
+  $.ajax({
+      url : "/chat/com", // Url of backend (can be python, php, etc..)
+      type: "POST", // data type (can be get, post, put, delete)
+      headers: {'X-CSRFToken': '{{ csrf_token }}'},
+      data: {p_id:{{product_detail.id}},msg: messages,receiver:'{{reo}}',sendr:'{{sn}}',csrfmiddlewaretoken:"{{csrf_token}}"}// data in json format
+     })
+        .done(function(data) {
+          $('#msg').val('');
+          $('.list-unstyled').append('<li class="media sent"><div class="media-body"><div class="msg-box"><div><p>'+messages+'</p><ul class="chat-msg-info"><li><div class="chat-time"><span>8:30 AM</span></div></li></ul></div></div></div></li>');
+        })
+        .fail(function() {
+          console.log("error");
+    })
+  }
+</script>
+<style>
+p.b {
+  white-space: nowrap;
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid #000000;
+}
+
+</style>
+    <!-- Page Content -->
+    <div class="content" style="height: 100%;">
+        <div class="container-fluid" style="height: 100%;">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="chat-window">
+                        <!-- Chat Left -->
+                        <div class="chat-cont-left">
+                            <div class="chat-header">
+                                <span>Chats</span>
+                                <a href="/" class="chat-compose">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                                <span>{{user.first_name}}-{{user.last_name}}</span>
+                            </div>
+                            <form class="chat-search" hidden>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Search">
+                                </div>
+                            </form>
+                            <div class="chat-users-list">
+                                {% for fn in re %}
+                                {% if fn.is_superuser %}
+                                <div class="media-img-wrap card ">
+                                    <div class="row" style="margin:20px">
+                                        <div class="col">
+                                            <div class="avatar avatar-awa">
+                                                <img src="{% static 'chat/assets/img/doctors/doctor-thumb-01.jpg' %}"
+                                                     alt="User Image" class="avatar-img rounded-circle">
+                                            </div>
+                                        </div>
+                                        <div class="col" style="padding-top:15px;padding-right:150px">
+                                            <a href="/chat/chatre/{{fn.id}}/?p_id={{pro_id}}">
+                                                <div class="user-name">{{fn.username}}</div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% if product_detail%}
+                            <div class="card text-center" style="width: 18rem;margin-left:17%" hidden>
+                                <img class="card-img-top rounded" style="height:150px" src="{{product_detail.img.url}}"
+                                     alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{product_detail.title}}</h5>
+                                    <a href="/product_detail/{{product_detail.id}}" class="btn btn-primary">Detail</a>
+                                </div>
+                            </div>
+                            {% else %}
+                            {% endif %}
+                        </div>
+                        <!-- /Chat Left -->
+
+                        <!-- Chat Right -->
+                        <div class="chat-cont-right" >
+                            <div class="chat-header">
+                                <a id="back_user_list" href="javascript:void(0)" class="back-user-list">
+                                    <i class="material-icons">chevron_left</i>
+                                </a>
+                                <div class="media">
+                                    <div class="media-img-wrap">
+                                        <div class="avatar avatar-onlin">
+                                            <img src="{% static 'chat/assets/img/doctors/doctor-thumb-02.jpg' %}"
+                                                 alt="User Image" class="avatar-img rounded-circle">
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="user-name">{{nm}}</div>
+                                        <div class="user-status">online</div>
+                                    </div>
+                                </div>
+                                {% if product_detail %}
+                                <div class="chat-options">
+                                    <img src="{{product_detail.img.url}}" alt=""
+                                         style="height:50px;width:50px;margin-right:25px">
+                                    <p class="b">
+                                        <Strong>Product:</Strong>&nbsp;{{product_detail.title}}.<br><Strong>Price:&nbsp;</Strong>{{product_detail.price}}$
+                                    </p>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="chat-body" style="height: 100%;">
+                                <div class="chat-scroll">
+                                    <ul class="list-unstyled">
+                                        {% for b in res %}
+                                        {% if b.to == 1 %}
+                                        <li class="media received">
+                                            <div class="media-body">
+                                                <div class="msg-box">
+                                                    <div>
+                                                        <p>{{b.sub}}</p>
+
+                                                        <ul class="chat-msg-info">
+                                                            <li>
+                                                                <div class="chat-time">
+                                                                    <span>{{b.create_at}}</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% else %}
+                                        <li class="media sent">
+                                            <div class="media-body">
+                                                <div class="msg-box">
+                                                    <div>
+                                                        <p>{{b.sub}}</p>
+                                                        <ul class="chat-msg-info">
+                                                            <li>
+                                                                <div class="chat-time">
+                                                                    <span>{{b.create_at}}</span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="chat-footer">
+                                <div class="input-group">
+
+                                    <input type="text" class="input-msg-send form-control" id="msg"
+                                           placeholder="Type something">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn msg-send-btn" onclick="snd()"><i
+                                                class="fab fa-telegram-plane"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Chat Right -->
+                    </div>
+                </div>
+            </div>
+            <!-- /Row -->
+        </div>
+    </div>
+    <!-- /Page Content -->
+<!-- Voice Call Modal -->
+<div class="modal fade call-modal" id="voice_call">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <!-- Outgoing Call -->
+                <div class="call-box incoming-box">
+                    <div class="call-wrapper">
+                        <div class="call-inner">
+                            <div class="call-user">
+                                <img alt="User Image" src="chat/assets/img/doctors/doctor-thumb-02.jpg"
+                                     class="call-avatar">
+                                <h4>Darren Elder</h4>
+                                <span>Connecting...</span>
+                            </div>
+                            <div class="call-items">
+                                <a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal"
+                                   aria-label="Close"><i class="material-icons">call_end</i></a>
+                                <a href="voice-call.html" class="btn call-item call-start"><i class="material-icons">call</i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Outgoing Call -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Voice Call Modal -->
+<!-- Video Call Modal -->
+<div class="modal fade call-modal" id="video_call">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+
+                <!-- Incoming Call -->
+                <div class="call-box incoming-box">
+                    <div class="call-wrapper">
+                        <div class="call-inner">
+                            <div class="call-user">
+                                <img class="call-avatar" src="chat/assets/img/doctors/doctor-thumb-02.jpg"
+                                     alt="User Image">
+                                <h4>Darren Elder</h4>
+                                <span>Calling ...</span>
+                            </div>
+                            <div class="call-items">
+                                <a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal"
+                                   aria-label="Close"><i class="material-icons">call_end</i></a>
+                                <a href="video-call.html" class="btn call-item call-start"><i class="material-icons">videocam</i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Incoming Call -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Video Call Modal -->
+<script type="text/javascript">
+  var x=0;
+  var y=0;
+  function receive() {
+    $.ajax({
+            url:'/chat/receive_data/{{reo}}/{{sn}}/',
+            type: 'POST',
+            dataType: 'json',
+            data: {receiver:'{{data.receiver}}',csrfmiddlewaretoken:"{{csrf_token}}"}
+          })
+          .done(function(a) {
+            console.log(a.id);
+            console.log(x);
+            if (y==0)
+            {
+            x=a.id;
+            y=1;
+            }
+            if (a.id>x){
+                $( ".list-unstyled" ).append('<li class="media received"><div class="avatar" hidden><img src="{% static "/assets/img/doctors/doctor-thumb-02.jpg" %}" alt="User Image" class="avatar-img rounded-circle"></div><div class="media-body"><div class="msg-box"><div><p>'+a.chat+'</p><ul class="chat-msg-info"><li><div class="chat-time"><span>'+a.tm+'</span></div></li></ul>	</div>	</div></div></li>')
+            }
+            x=a.id;
+          })
+          .fail(function() {
+            console.log("error");
+          })
+    }
+  setInterval(receive,2000);
+
+
+
+</script>
+
+<!-- Video Call Modal -->
+{% endblock  %}
