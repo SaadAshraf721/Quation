@@ -22,23 +22,23 @@
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 <script>
-function snd(){
-console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
- messages=$('#msg').val();
-  $.ajax({
-      url : "/chat/com", // Url of backend (can be python, php, etc..)
-      type: "POST", // data type (can be get, post, put, delete)
-      headers: {'X-CSRFToken': '{{ csrf_token }}'},
-      data: {p_id:{{product_detail.id}},msg: messages,receiver:'{{reo}}',sendr:'{{sn}}',csrfmiddlewaretoken:"{{csrf_token}}"}// data in json format
-     })
-        .done(function(data) {
-          $('#msg').val('');
+	function snd(){
+	console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+	 messages=$('#msg').val();
+	  $.ajax({
+	  url : "/chat/coma", // Url of backend (can be python, php, etc..)
+	  type: "POST", // data type (can be get, post, put, delete)
+	  headers: {'X-CSRFToken': '{{ csrf_token }}'},
+	  data: {msg: messages,receiver:'{{reo}}',sendr:'{{sn}}',csrfmiddlewaretoken:"{{csrf_token}}"}// data in json format
+	 })
+		.done(function(data) {
+		  $('#msg').val('');
           $('.mb0').append('<li class="clearfix"><div class="message-data text-right"><span class="message-data-time"></span><img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar"></div><div class="message other-message float-right">'+messages+'</div></li>');
-        })
-        .fail(function() {
-          console.log("error");
-    })
-  }
+		})
+		.fail(function() {
+		  console.log("error");
+		})
+	  }
 </script>
 <script>
     function scrl(){
@@ -53,23 +53,23 @@ console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
                 <div id="plist" class="people-list">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><a href="/"><i class="fa fa-home"></i></a></span>
-                            <span class="form-control" style="padding-top:10px;padding-left:10px">{{user.first_name}}&nbsp;{{user.last_name}}</span>
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
                         </div>
+                        <input type="text" class="form-control" placeholder="Search..." id="myInput" onkeyup="myFunction()">
                     </div>
-                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                    <ul class="list-unstyled chat-list mt-2 mb-0" id="myUL">
                         {% for fn in re %}
-                        {% if fn.is_superuser %}
                         <li class="clearfix">
-                            <a href="/chat/chatre/{{fn.id}}/?p_id={{pro_id}}">
+                            <a href="/chat/chatrea/{{fn.id}}">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                                 <div class="about">
-                                    <div class="name" style="padding-top:10px">{{fn.username}}</div>
+                                    <div class="name" style="padding-top:10px">{{fn.first_name}}&nbsp;{{fn.last_name}}</div>
                                     <div class="status" hidden><i class="fa fa-circle offline"></i> left 7 mins ago</div>
                                 </div>
                             </a>
                         </li>
-                        {% endif %}
+                        {% empty %}
+                        <p>No user found</p>
                         {% endfor %}
                     </ul>
                 </div>
@@ -86,10 +86,10 @@ console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
                                 </div>
                             </div>
                             <div class="col-lg-9 text-right">
-                                {% if product_detail %}
+                                {% if pd %}
                                     <a href="javascript:void(0);" class="btn btn-outline-secondary">
-                                        <img src="{{product_detail.img.url}}" alt="avatar" style="height:50px;width:50px">
-                                        <p class="b" style="padding-top:10px">{{product_detail.title}}.</p>
+                                        <img src="{{pd.product.img.url}}" alt="avatar" style="height:50px;width:50px">
+                                        <p class="b">{{pd.product.title}}.</p>
                                     </a>
                                 {% endif %}
                             </div>
@@ -98,7 +98,7 @@ console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
                     <div id="mydiv" class="chat-history" style="height:350px;overflow-y: scroll;position:relative!important;">
                         <ul class="mb0">
                             {% for b in res %}
-                            {% if b.to == 1 %}
+                            {% if b.to == 0 %}
                             <li class="clearfix">
                                 <div class="message-data">
                                     <span class="message-data-time">{{b.create_at}}</span>
@@ -132,34 +132,70 @@ console.log("okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
         </div>
     </div>
 </div>
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
 <script type="text/javascript">
-  var x=0;
-  var y=0;
+			 var x=0;
+			 var y=0;
   function receive() {
-    $.ajax({
-            url:'/chat/receive_data/{{reo}}/{{sn}}/',
-            type: 'POST',
-            dataType: 'json',
-            data: {receiver:'{{data.receiver}}',csrfmiddlewaretoken:"{{csrf_token}}"}
-          })
-          .done(function(a) {
-            console.log(a.id);
-            console.log(x);
-            if (y==0)
+
+
+
+$.ajax({
+    url:'/chat/receive_dataa/{{reo}}/{{sn}}/',
+    type: 'POST',
+    dataType: 'json',
+    data: {receiver:'{{data.receiver}}',csrfmiddlewaretoken:"{{csrf_token}}"}
+  })
+  .done(function(a) {
+    console.log(a.chat);
+    console.log(a.id);
+
+ console.log(x);
+ if (y==0)
             {
             x=a.id;
             y=1;
+
             }
-            if (a.id>x){
-                $( ".mb0" ).append('<li class="clearfix"><div class="message-data"><span class="message-data-time">'+a.chat+'</span></div><div class="message my-message">'+a.tm+'</div></li>')
-            }
-            x=a.id;
-          })
-          .fail(function() {
-            console.log("error");
-          })
-    }
+            console.log(a.id);
+            console.log(x);
+    if (a.id>x){
+        $( ".mb0" ).append('<li class="clearfix"><div class="message-data"><span class="message-data-time">'+a.chat+'</span></div><div class="message my-message">'+a.tm+'</div></li>')
+
+}
+x=a.id;
+
+
+
+
+  })
+  .fail(function() {
+    console.log("error");
+  })
+}
+
+
+
   setInterval(receive,2000);
+
+
 </script>
 <style type="text/css">
 body{

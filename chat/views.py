@@ -5,9 +5,10 @@ from django.shortcuts import render
 from app.models import *
 from chat.models import *
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
+@login_required(login_url='/login/')
 def chatre(request, id):
     product_detail = ""
     vl = ""
@@ -24,10 +25,11 @@ def chatre(request, id):
     nm = User.objects.filter(id=id)
     for q in nm:
         nam = q.username
-    res = chat.objects.filter(doc=id, pa=usr)
+    res = chat.objects.filter(doc=id, pa=usr).order_by('id')
     ob = User.objects.filter(is_staff=True)
     response = render(request, 'chatr/chat_app.html',
-                      {'re': ob, 'res': res, 'nm': nam, 'sn': usr, 'reo': id, 'product_detail': product_detail,'pro_id':p_id})
+                      {'re': ob, 'res': res, 'nm': nam, 'sn': usr, 'reo': id, 'product_detail': product_detail,
+                       'pro_id': p_id})
     response.set_cookie('product_id', p_id, max_age=300000)
     return response
 
@@ -54,16 +56,18 @@ def com(request):
     return JsonResponse('hit', safe=False)
 
 
+@login_required(login_url='/login/')
 def chatrea(request, id):
     usr = request.user.id
     uid = id
     nm = User.objects.filter(id=id)
     for q in nm:
-        nam = q.username
-    res = chat.objects.filter(doc=usr, pa=uid)
+        nam = q.first_name + " " + q.last_name
+    res = chat.objects.filter(doc=usr, pa=uid).order_by('id')
     product_d = chat.objects.filter(doc=usr, pa=uid, to=0).last()
     ob = User.objects.filter(is_staff=False)
-    return render(request, 'chat/chata.html', {'re': ob, 'res': res, 'nm': nam, 'sn': usr, 'reo': uid, 'pd': product_d})
+    return render(request, 'chatr/chat_app_admin.html',
+                  {'re': ob, 'res': res, 'nm': nam, 'sn': usr, 'reo': uid, 'pd': product_d})
 
 
 def receive_dataa(request, pid, uid):

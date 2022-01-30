@@ -47,12 +47,17 @@
                                 <td class="product-subtotal text-center">
                                     {% if user.is_authenticated %}
                                     {% if not user.is_staff %}
-                                    <a href="/chat/chatre/{{user.id}}/?p_id={{i.product.id}}" class="btn btn-small"
+                                    <a href="/chat/chatre/{{ad.id}}/?p_id={{i.product.id}}" class="btn btn-small"
                                        type="button">Get a Quote</a>
                                     {% else %}
                                     <a hidden href="/chat/chatrea/{{user.id}}" class="btn btn-small" type="button">Get a
                                         Quote</a>
                                     {% endif %}
+                                    {% else %}
+                                    <a href="/login/">
+                                    <span style="font-size: 1.5em; color: Tomato;">
+                                          <i class="fa fa-opencart"></i>
+                                    </span>Get a Quote</a>
                                     {% endif %}
                                 </td>
                             </tr>

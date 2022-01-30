@@ -14,16 +14,17 @@ def chat(request):
 def search(request):
     query = request.GET.get('q')
     menu_list = menu.objects.filter(sts=True)
+    admin_detail = User.objects.filter(is_staff=True, is_superuser=True).last()
     product_list = product.objects.filter(Q(sts=True) & Q(title__icontains=query) | Q(desc__icontains=query))
-    context = {'product': product_list, 'menu': menu_list}
+    context = {'product': product_list, 'menu': menu_list,'ad':admin_detail}
     return render(request, 'search.html', context)
 
 
 def index(request):
     menu_list = menu.objects.filter(sts=True)
     product_list = product.objects.filter(sts=True)
-
-    return render(request, 'index.html', {'product': product_list, 'menu': menu_list})
+    admin_detail = User.objects.filter(is_staff=True, is_superuser=True).last()
+    return render(request, 'index.html', {'product': product_list, 'menu': menu_list, 'ad': admin_detail})
 
 
 def login(request):
@@ -64,6 +65,8 @@ def product_detail(request, id):
     products = product.objects.get(id=id)
     product_images = productImage.objects.filter(product_id=id)
     viewer = count.objects.filter(product_id=id)
+    admin_detail = User.objects.filter(is_staff=True, is_superuser=True).last()
+
     if not viewer:
         new_viewer = count(product_id=id, viewers=1)
         new_viewer.save()
@@ -74,13 +77,14 @@ def product_detail(request, id):
     product_list = product.objects.filter(sts=True).order_by("?")
     return render(request, 'product-detail.html',
                   {'product': products, 'product_list': product_list, 'menu': menu_list,
-                   'product_images': product_images})
+                   'product_images': product_images, 'ad': admin_detail})
 
 
 def products(request, id):
     menu_list = menu.objects.filter(sts=True)
     category_list = category.objects.filter(sts=True)
-    product_list = product.objects.filter(sts=True,menu_id=id)
+    product_list = product.objects.filter(sts=True, menu_id=id)
+    admin_detail = User.objects.filter(is_staff=True, is_superuser=True).last()
     find = ""
     if request.method == 'POST':
         get_category = request.POST['category']
@@ -90,9 +94,11 @@ def products(request, id):
         get_max_price = get_price_range[1]
         find = product.objects.filter(sts=True, category_id=get_category,
                                       price__range=[get_min_price, get_max_price])
-        return render(request, 'products.html', {'products': find, 'caty': category_list,'menu': menu_list,})
+        return render(request, 'products.html',
+                      {'products': find, 'caty': category_list, 'menu': menu_list, 'ad': admin_detail})
     return render(request, 'products.html',
-                  {'product': product_list, 'menu': menu_list, 'caty': category_list, 'products': find})
+                  {'product': product_list, 'menu': menu_list, 'caty': category_list, 'products': find,
+                   'ad': admin_detail})
 
 
 def E404(request):
@@ -104,7 +110,8 @@ def E404(request):
 def wishlists(request):
     menu_list = menu.objects.filter(sts=True)
     wishlists_list = wishlist.objects.filter(user=request.user.id)
-    return render(request, 'wishlist.html', {'wishlist': wishlists_list, 'menu': menu_list})
+    admin_detail = User.objects.filter(is_staff=True, is_superuser=True).last()
+    return render(request, 'wishlist.html', {'wishlist': wishlists_list, 'menu': menu_list,'ad': admin_detail})
 
 
 @login_required(login_url='/login/')

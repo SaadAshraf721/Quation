@@ -213,12 +213,12 @@
                                     <!-- start product image -->
                                     <a href="/product_detail/{{i.id}}">
                                         <!-- image -->
-                                        <img style="height:170px;" class="primary blur-up lazyload"
+                                        <img style="height:230px;" class="img-thumbnail img-fluid"
                                              data-src="{{i.img.url}}" src="{{i.img.url}}" alt="image" title="product">
                                         <!-- End image -->
                                         <!-- Hover image -->
                                         <img style="height: 170px;" class="hover blur-up lazyload"
-                                             data-src="{{i.img.url}}" src="{{i.img.url}}" alt="image" title="product">
+                                             data-src="{{i.img.url}}" src="{{i.img.url}}" alt="image" title="product" hidden>
                                         <!-- End hover image -->
                                         <!-- product label -->
                                         <div class="product-labels rectangular" hidden><span
@@ -247,7 +247,7 @@
                                 <!-- end product image -->
                                 {% if user.is_authenticated %}
                                 {% if not user.is_staff %}
-                                <a href="/chat/chatre/{{user.id}}?p_id={{i.id}}">
+                                <a href="/chat/chatre/{{ad.id}}?p_id={{i.id}}">
                                      <span style="font-size: 1.5em; color: Tomato;">
                                           <i class="fa fa-opencart"></i>
                                     </span>Get a Quote</a>

@@ -70,19 +70,12 @@
                                             <!-- start product image -->
                                             <a href="/product_detail/{{i.id}}">
                                                 <!-- image -->
-                                                <img class="primary blur-up lazyload" style="height: 170px;"
+                                                <img class="img-thumbnail img-fluid"
                                                      data-src="{{i.img.url}}"
                                                      src="{{i.img.url}}"
                                                      alt="image"
-                                                     title="product">
+                                                     title="product" style="height: 200px;">
                                                 <!-- End image -->
-                                                <!-- Hover image -->
-                                                <img class="hover blur-up lazyload" style="height: 170px;"
-                                                     data-src="{{i.img.url}}"
-                                                     src="{{i.img.url}}"
-                                                     alt="image"
-                                                     title="product">
-                                                <!-- End hover image -->
                                             </a>
                                             <!-- end product image -->
                                             <!-- Start product button -->
@@ -99,10 +92,10 @@
                                         <!-- end product image -->
                                         {% if user.is_authenticated %}
                                         {% if not user.is_staff %}
-                                        <a href="/chat/chatre/{{user.id}}/?p_id={{i.id}}">
+                                        <a href="/chat/chatre/{{ad.id}}/?p_id={{i.id}}">
                                             <span style="font-size: 1.5em; color: Tomato;">
                                                   <i class="fa fa-opencart"></i>
-                                            </span>Get a Quote</a>
+                                            </span>Get a Quote </a>
                                         </a>
                                         {% else %}
                                         <a href="/chat/chatrea/{{user.id}}" class="btn btn-addto-cart"

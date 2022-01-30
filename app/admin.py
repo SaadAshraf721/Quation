@@ -23,6 +23,7 @@ class PostImageAdmin(admin.StackedInline):
 class PostAdmin(admin.ModelAdmin):
     inlines = [PostImageAdmin]
     list_display = ("id", "title", "sts", "create_at")
+    list_per_page = 10
     class Meta:
         model = product
 

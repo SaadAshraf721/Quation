@@ -9,7 +9,7 @@
         <!--Breadcrumb-->
         <div class="bredcrumbWrap">
             <div class="container-fluid breadcrumbs">
-                <a href="index.html" title="Back to the home page">Home</a><span aria-hidden="true">›</span><span>{{product.title}}</span>
+                <a href="/" title="Back to the home page">Home</a><span aria-hidden="true">›</span><span>{{product.title}}</span>
             </div>
         </div>
         <!--End Breadcrumb-->
@@ -125,8 +125,8 @@
                                         </div>
                                         {% if user.is_authenticated %}
                                         {% if not user.is_staff %}
-                                        <a href="/chat/chatre/{{user.id}}/?p_id={{product.id}}"
-                                           class="shopify-payment-button__button">
+                                        <a href="/chat/chatre/{{ad.id}}/?p_id={{product.id}}"
+                                           class="float-left">
                                             <span style="font-size: 1.5em; color: Tomato;">
                                                   <i class="fa fa-opencart"></i>
                                              </span>
@@ -142,8 +142,8 @@
                                         </a>
                                         {% endif %}
                                         {% else %}
-                                        <a href="/login/" type="button">
-                                            <span style="font-size: 1.5em; color: Tomato;">
+                                        <a href="/login/" type="button" class="float-left">
+                                            <span style="font-size: 1.5em; color: Tomato;" >
                                                   <i class="fa fa-opencart"></i>
                                             </span>Get a Quote</a>
                                         {% endif %}
